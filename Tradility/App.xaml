@@ -1,0 +1,62 @@
+﻿<Application
+    x:Class="Tradility.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Converters="clr-namespace:Tradility.UI.Converters;assembly=Tradility.UI"
+    xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
+    Startup="Application_Startup">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Tradility.UI;component/Styles/Converters.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/ToastNotifications.Messages;component/Themes/Default.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/MaterialDesignColor.purple.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Tradility.UI;component/Styles/ComboBoxStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Tradility.UI;component/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Tradility.UI;component/Styles/DataGridStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Tradility.UI;component/Styles/TextBoxStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Tradility.UI;component/Styles/ScrollBarStyles.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Tradility.UI;component/Styles/CheckBoxStyles.xaml" />
+
+                <ResourceDictionary Source="/Forms/DataTemplates.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="PrimaryHueMidBrush" Color="Transparent" />
+            <SolidColorBrush x:Key="PrimaryHueMidForegroundBrush" Color="Black" />
+            <SolidColorBrush x:Key="SecondaryAccentBrush" Color="Red" />
+            <SolidColorBrush x:Key="SecondaryAccentForegroundBrush" Color="{StaticResource Accent200Foreground}" />
+
+            <Style BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" TargetType="{x:Type dragablz:TabablzControl}" />
+
+            <Style TargetType="{x:Type TabItem}">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Setter Property="Foreground" Value="#48637E" />
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Border BorderBrush="Red" BorderThickness="0,0,0,2">
+                                        <TextBlock Text="{TemplateBinding Content}" />
+                                    </Border>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                    <Trigger Property="IsSelected" Value="False">
+                        <Setter Property="Foreground" Value="#B4B4B4" />
+                        <Setter Property="HeaderTemplate">
+                            <Setter.Value>
+                                <DataTemplate>
+                                    <Border>
+                                        <TextBlock Text="{TemplateBinding Content}" />
+                                    </Border>
+                                </DataTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

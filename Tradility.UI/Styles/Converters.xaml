@@ -1,0 +1,10 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Converters="clr-namespace:Tradility.UI.Converters">
+    <Converters:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+    <Converters:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <Converters:InversedBooleanToVisibilityConverter x:Key="InversedBooleanToVisibilityConverter" />
+
+</ResourceDictionary>

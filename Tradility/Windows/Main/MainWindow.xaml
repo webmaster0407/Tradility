@@ -1,0 +1,92 @@
+﻿<Window
+    x:Class="Tradility.Windows.Main.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:local="clr-namespace:Tradility.Windows.Main"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:Tradility.Properties"
+    Title="Tradility"
+    Width="800"
+    Height="450"
+    MinWidth="400"
+    MinHeight="300"
+    Icon="../../Properties/Icons/Logo.png"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Grid Background="Transparent" MouseDown="Grid_MouseDown">
+        <dragablz:TabablzControl x:Name="tabControl">
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController x:Name="interTabController" />
+            </dragablz:TabablzControl.InterTabController>
+            <dragablz:TabablzControl.HeaderPrefixContent>
+                <StackPanel Margin="25,0,20,0" Orientation="Horizontal">
+                    <Image Width="27" Height="27">
+                        <Image.Source>
+                            <BitmapImage UriSource="../../Properties/Icons/Logo.png" />
+                        </Image.Source>
+                    </Image>
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        FontWeight="Bold"
+                        Text="Tradility" />
+                    <Label Margin="10,0,0,0" 
+                           x:Name="versionIdentifier"
+                           Content="Version 1.1.3" 
+                           VerticalContentAlignment="Center"
+                           Foreground="#76888E" 
+                           FontSize="10"/>
+                </StackPanel>
+            </dragablz:TabablzControl.HeaderPrefixContent>
+            <dragablz:TabablzControl.HeaderSuffixContent>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <fa:FontAwesome
+                        Grid.Column="1"
+                        Margin="0,0,15,0"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        Foreground="#CD1316"
+                        Icon="Question"
+                        MouseDown="Manual_MouseDown" />
+                    <fa:FontAwesome
+                        Grid.Column="2"
+                        Margin="0,0,15,0"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        Foreground="#CD1316"
+                        Icon="Gear"
+                        MouseDown="Settings_MouseDown" />
+                    <StackPanel
+                        Grid.Column="3"
+                        Margin="0,0,5,0"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <StackPanel.Resources>
+                            <Style TargetType="Button">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="BorderBrush" Value="Transparent" />
+                                <Setter Property="Foreground" Value="Black" />
+                                <Setter Property="Padding" Value="10" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button Click="MinimizeClick" Content="_" />
+                        <Button Click="MaximizeClick" Content="▢" />
+                        <Button Click="CloseClick" Content="X" />
+                    </StackPanel>
+                </Grid>
+            </dragablz:TabablzControl.HeaderSuffixContent>
+        </dragablz:TabablzControl>
+    </Grid>
+</Window>

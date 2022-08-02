@@ -1,0 +1,51 @@
+﻿<UserControl
+    x:Class="Tradility.Forms.Positions.PositionsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:properties="clr-namespace:Tradility.Properties"
+    xmlns:local="clr-namespace:Tradility.Forms.Positions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uiUtils="clr-namespace:Tradility.UI.Utils;assembly=Tradility.UI"
+    d:DataContext="{d:DesignInstance Type=local:PositionsViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <DataGrid
+        AutoGenerateColumns="False"
+        IsReadOnly="True"
+        ItemsSource="{Binding Items}"
+        SelectedItem="{Binding SelectedItem}">
+        <DataGrid.Resources>
+            <uiUtils:BindingProxy x:Key="proxy" Data="{Binding}" />
+        </DataGrid.Resources>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="SelectionChanged">
+                <i:InvokeCommandAction Command="{Binding SelectedItemChangedCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <DataGrid.Columns>
+            <DataGridTextColumn
+                Binding="{Binding AvgCost}"
+                DisplayIndex="{Binding Data.PositionColumns.AvgCost.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=3}"
+                Header="{x:Static properties:Resources.AverageCost}"
+                Visibility="{Binding Data.PositionColumns.AvgCost.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding Pos}"
+                DisplayIndex="{Binding Data.PositionColumns.Pos.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=2}"
+                Header="{x:Static properties:Resources.Position}"
+                Visibility="{Binding Data.PositionColumns.Pos.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding Account}"
+                DisplayIndex="{Binding Data.PositionColumns.Account.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=1}"
+                Header="{x:Static properties:Resources.Account}"
+                Visibility="{Binding Data.PositionColumns.Account.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding ContractFormatted}"
+                DisplayIndex="{Binding Data.PositionColumns.Contract.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=0}"
+                Header="{x:Static properties:Resources.Contract}"
+                Visibility="{Binding Data.PositionColumns.Contract.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

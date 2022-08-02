@@ -1,0 +1,151 @@
+﻿<UserControl
+    x:Class="Tradility.Forms.SideBar.SideBarView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:Tradility.Forms.SideBar"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:properties="clr-namespace:Tradility.Properties"
+    xmlns:settings="clr-namespace:Tradility.Windows.Settings"
+    xmlns:usercontrols="clr-namespace:Tradility.UI.UserControls;assembly=Tradility.UI"
+    xmlns:vm="clr-namespace:Tradility.ViewModels"
+    d:DataContext="{d:DesignInstance Type=local:SideBarViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <StackPanel Orientation="Vertical">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.Resources>
+                <Style TargetType="TextBox">
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="Padding" Value="8,5" />
+                </Style>
+            </Grid.Resources>
+            <Border
+                Background="#F0F0F0"
+                BorderBrush="#D7DCDF"
+                BorderThickness="1">
+                <Label
+                    HorizontalAlignment="Center"
+                    Background="Transparent"
+                    Content="TWS" />
+            </Border>
+
+            <Border
+                Grid.Column="1"
+                Padding="0"
+                Background="#D7DCDF"
+                BorderBrush="#D7DCDF"
+                BorderThickness="0,1,1,1">
+                <settings:TwsConnectionPicker />
+            </Border>
+        </Grid>
+        <Grid Height="35" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ComboBox
+                Background="Transparent"
+                ItemsSource="{Binding Currencies}"
+                SelectedItem="{Binding SelectedCurrency}" />
+            <Button
+                Grid.Column="1"
+                Margin="5,0,0,0"
+                Background="#F2F2F2"
+                BorderBrush="#CACFD2"
+                Command="{Binding LoadCurrenciesCommand}"
+                Foreground="#333333"
+                IsEnabled="{Binding IsLoadingCurrencies, Converter={StaticResource InverseBooleanConverter}}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontWeight="Normal" Text="{x:Static properties:Resources.LoadCurrencies}" />
+                    <usercontrols:BusyIndicator
+                        Width="15"
+                        Height="15"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding IsLoadingCurrencies, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </StackPanel>
+            </Button>
+        </Grid>
+        <ComboBox
+            Height="35"
+            Margin="0,10,0,0"
+            ItemsSource="{Binding Repositories}"
+            SelectedItem="{Binding SelectedRepository}"
+            Tag="{Binding IsLoading}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding LoadCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </ComboBox>
+        <Button
+            Height="35"
+            Margin="0,10,0,0"
+            Background="#F2F2F2"
+            BorderBrush="#CACFD2"
+            Command="{Binding LoadPositionsCommand}"
+            Foreground="#333333"
+            IsEnabled="{Binding IsLoadingPositions, Converter={StaticResource InverseBooleanConverter}}">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock FontWeight="Normal" Text="{x:Static properties:Resources.TwsPositions}" />
+                <usercontrols:BusyIndicator
+                    Width="15"
+                    Height="15"
+                    Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    Visibility="{Binding IsLoadingPositions, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            </StackPanel>
+        </Button>
+        <Button
+            Height="35"
+            Margin="0,10,0,0"
+            Command="{Binding ChooseFileCommand}"
+            Content="{x:Static properties:Resources.SelectFile}"
+            FontWeight="SemiBold" />
+        <!--<TextBox
+            Height="35"
+            Margin="0,10,0,0"
+            VerticalAlignment="Center"
+            Background="White"
+            IsReadOnly="True"
+            Text="{Binding FilePath}"
+            ToolTip="{Binding FilePath}" />-->
+        <Border
+            Height="35"
+            Margin="0,10,0,0"
+            Padding="10"
+            VerticalAlignment="Center"
+            Background="White"
+            BorderBrush="#3333334D"
+            BorderThickness="1"
+            CornerRadius="4"
+            Visibility="{Binding FilePathIsNotEmpty, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid>
+                <TextBlock
+                    Margin="2,0,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Foreground="#99000000"
+                    Text="{Binding FilePath}" />
+            </Grid>
+        </Border>
+    </StackPanel>
+</UserControl>

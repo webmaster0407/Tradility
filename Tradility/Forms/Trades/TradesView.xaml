@@ -1,0 +1,146 @@
+﻿<UserControl
+    x:Class="Tradility.Forms.Trades.TradesView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:clr="clr-namespace:System;assembly=netstandard"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:properties="clr-namespace:Tradility.Properties"
+    xmlns:local="clr-namespace:Tradility.Forms.Trades"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uiUtils="clr-namespace:Tradility.UI.Utils;assembly=Tradility.UI" 
+    xmlns:converters="clr-namespace:Tradility.UI.Converters;assembly=Tradility.UI"
+    x:Name="root"
+    d:DataContext="{d:DesignInstance Type=local:TradesViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <uiUtils:StringHolder x:Key="TPriceExchangedHeader" Value="{Binding DataContext.Currency, Source={x:Reference root}, StringFormat=T. Price [{0}]}" />
+            <uiUtils:StringHolder x:Key="CPriceExchangedHeader" Value="{Binding DataContext.Currency, Source={x:Reference root}, StringFormat=C. Price [{0}]}" />
+            <uiUtils:StringHolder x:Key="ProceedsExchangedHeader" Value="{Binding DataContext.Currency, Source={x:Reference root}, StringFormat=Proceeds [{0}]}" />
+            <uiUtils:StringHolder x:Key="CommFeeExchangedHeader" Value="{Binding DataContext.Currency, Source={x:Reference root}, StringFormat=Comm/Fee [{0}]}" />
+            <uiUtils:StringHolder x:Key="RealizedPLExchangedHeader" Value="{Binding DataContext.Currency, Source={x:Reference root}, StringFormat=Realized P/L [{0}]}" />
+            <uiUtils:StringHolder x:Key="ExchangeRateHeader" Value="{Binding DataContext.Currency, Source={x:Reference root}, StringFormat=Exchange Rate [{0}]}" />
+            <converters:DateTimeOffsetToDateConverter x:Key="DateTimeOffsetToDateConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DataGrid
+        x:Name="dataGrid"
+        AutoGenerateColumns="False"
+        IsReadOnly="True"
+        ItemsSource="{Binding Items}"
+        SelectedItem="{Binding SelectedItem}">
+        <DataGrid.Resources>
+            <uiUtils:BindingProxy x:Key="proxy" Data="{Binding}" />
+        </DataGrid.Resources>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="SelectionChanged">
+                <i:InvokeCommandAction Command="{Binding SelectedItemChangedCommand}" />
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+        <DataGrid.Columns>
+            <DataGridTextColumn
+                Binding="{Binding ExchangeRateFormatted}"
+                DisplayIndex="{Binding Data.TradeColumns.ExchangeRate.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=19}"
+                Header="{Binding Value, Source={StaticResource ExchangeRateHeader}}"
+                Visibility="{Binding Data.TradeColumns.ExchangeRate.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding Code}"
+                DisplayIndex="{Binding Data.TradeColumns.Code.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=18}"
+                Header="{x:Static properties:Resources.Code}"
+                Visibility="{Binding Data.TradeColumns.Code.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding MtmPL}"
+                DisplayIndex="{Binding Data.TradeColumns.MtmPL.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=17}"
+                Header="{x:Static properties:Resources.MtmPL}"
+                Visibility="{Binding Data.TradeColumns.MtmPL.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding RealizedPLPercent}"
+                DisplayIndex="{Binding Data.TradeColumns.RealizedPLPercent.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=16}"
+                Header="Realized P/L %"
+                Visibility="{Binding Data.TradeColumns.RealizedPLPercent.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding RealizedPLExchanged}"
+                DisplayIndex="{Binding Data.TradeColumns.RealizedPLExchanged.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=15}"
+                Header="{Binding Value, Source={StaticResource RealizedPLExchangedHeader}}"
+                Visibility="{Binding Data.TradeColumns.RealizedPLExchanged.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding RealizedPL}"
+                DisplayIndex="{Binding Data.TradeColumns.RealizedPL.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=14}"
+                Header="{x:Static properties:Resources.RealizedPL}"
+                Visibility="{Binding Data.TradeColumns.RealizedPL.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding CommFeeExchanged}"
+                DisplayIndex="{Binding Data.TradeColumns.CommFeeExchanged.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=13}"
+                Header="{Binding Value, Source={StaticResource CommFeeExchangedHeader}}"
+                Visibility="{Binding Data.TradeColumns.CommFeeExchanged.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding CommFeeFormatted}"
+                DisplayIndex="{Binding Data.TradeColumns.CommFee.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=12}"
+                Header="{x:Static properties:Resources.CommFee}"
+                Visibility="{Binding Data.TradeColumns.CommFee.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding ProceedsExchanged}"
+                DisplayIndex="{Binding Data.TradeColumns.ProceedsExchanged.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=11}"
+                Header="{Binding Value, Source={StaticResource ProceedsExchangedHeader}}"
+                Visibility="{Binding Data.TradeColumns.ProceedsExchanged.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding Proceeds}"
+                DisplayIndex="{Binding Data.TradeColumns.Proceeds.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=10}"
+                Header="{x:Static properties:Resources.Proceeds}"
+                Visibility="{Binding Data.TradeColumns.Proceeds.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding CPriceExchanged}"
+                DisplayIndex="{Binding Data.TradeColumns.CPriceExchanged.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=9}"
+                Header="{Binding Value, Source={StaticResource CPriceExchangedHeader}}"
+                Visibility="{Binding Data.TradeColumns.CPriceExchanged.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding CPriceFormatted}"
+                DisplayIndex="{Binding Data.TradeColumns.CPrice.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=8}"
+                Header="{x:Static properties:Resources.CPrice}"
+                Visibility="{Binding Data.TradeColumns.CPrice.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding TPriceExchanged}"
+                DisplayIndex="{Binding Data.TradeColumns.TPriceExchanged.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=7}"
+                Header="{Binding Value, Source={StaticResource TPriceExchangedHeader}}"
+                Visibility="{Binding Data.TradeColumns.TPriceExchanged.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding TPriceFormatted}"
+                DisplayIndex="{Binding Data.TradeColumns.TPrice.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=6}"
+                Header="{x:Static properties:Resources.TPrice}"
+                Visibility="{Binding Data.TradeColumns.TPrice.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding Quantity}"
+                DisplayIndex="{Binding Data.TradeColumns.Quantity.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=5}"
+                Header="{x:Static properties:Resources.Quantity}"
+                Visibility="{Binding Data.TradeColumns.Quantity.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding DateTime, Converter={StaticResource DateTimeOffsetToDateConverter}}"
+                DisplayIndex="{Binding Data.TradeColumns.DateTime.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=4}"
+                Header="{x:Static properties:Resources.DateTime}"
+                Visibility="{Binding Data.TradeColumns.DateTime.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding Symbol}"
+                DisplayIndex="{Binding Data.TradeColumns.Symbol.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=3}"
+                Header="{x:Static properties:Resources.Symbol}"
+                Visibility="{Binding Data.TradeColumns.Symbol.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding Currency}"
+                DisplayIndex="{Binding Data.TradeColumns.Currency.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=2}"
+                Header="{x:Static properties:Resources.Currency}"
+                Visibility="{Binding Data.TradeColumns.Currency.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding AssetCategory}"
+                DisplayIndex="{Binding Data.TradeColumns.AssetCategory.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=1}"
+                Header="{x:Static properties:Resources.AssetCategory}"
+                Visibility="{Binding Data.TradeColumns.AssetCategory.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding DataDiscriminator}"
+                DisplayIndex="{Binding Data.TradeColumns.DataDiscriminator.Order, Source={StaticResource proxy}, Mode=TwoWay, FallbackValue=0}"
+                Header="{x:Static properties:Resources.DataDiscriminator}"
+                Visibility="{Binding Data.TradeColumns.DataDiscriminator.IsChecked, Source={StaticResource proxy}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>

@@ -1,0 +1,55 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:CashReports="clr-namespace:Tradility.Forms.CashReports"
+    xmlns:Dividends="clr-namespace:Tradility.Forms.Dividends"
+    xmlns:Positions="clr-namespace:Tradility.Forms.Positions"
+    xmlns:SideBar="clr-namespace:Tradility.Forms.SideBar"
+    xmlns:Stocks="clr-namespace:Tradility.Forms.Stocks"
+    xmlns:Tables="clr-namespace:Tradility.Forms.Tables"
+    xmlns:Trades="clr-namespace:Tradility.Forms.Trades">
+
+    <DataTemplate DataType="{x:Type Tables:TablesViewModel}">
+        <Tables:TablesView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type Trades:TradesViewModel}">
+        <Trades:TradesView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type Trades:TradesMiniViewModel}">
+        <Trades:TradesMiniView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type CashReports:CashReportsViewModel}">
+        <CashReports:CashReportsView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type Stocks:StocksViewModel}">
+        <Stocks:StocksView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type Positions:PositionsViewModel}">
+        <Positions:PositionsView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type Positions:PositionsMiniViewModel}">
+        <Positions:PositionsMiniView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type Dividends:DividendsViewModel}">
+        <Dividends:DividendsView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type Dividends:DividendsMiniViewModel}">
+        <Dividends:DividendsMiniView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type SideBar:SideBarViewModel}">
+        <SideBar:SideBarView />
+    </DataTemplate>
+
+    <!--  Workaround  -->
+    <Style TargetType="{x:Type Rectangle}" />
+
+</ResourceDictionary>

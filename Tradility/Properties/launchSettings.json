@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Tradility": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS": "--disable-web-security --disk-cache-size=1"
+      },
+      "jsWebView2Debugging": false
+    }
+  }
+}

@@ -1,0 +1,49 @@
+﻿<UserControl
+    x:Class="Tradility.Forms.CashReports.CashReportsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:properties="clr-namespace:Tradility.Properties"
+    xmlns:local="clr-namespace:Tradility.Forms.CashReports"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:uiUtils="clr-namespace:Tradility.UI.Utils;assembly=Tradility.UI"
+    d:DataContext="{d:DesignInstance Type=local:CashReportsViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <DataGrid
+        AutoGenerateColumns="False"
+        IsReadOnly="True"
+        ItemsSource="{Binding Items}">
+        <DataGrid.Resources>
+            <uiUtils:BindingProxy x:Key="columns" Data="{Binding CashReportColumns}" />
+        </DataGrid.Resources>
+        <DataGrid.Columns>
+            <DataGridTextColumn
+                Binding="{Binding Total}"
+                DisplayIndex="{Binding Data.Total.Order, Source={StaticResource columns}, Mode=TwoWay, FallbackValue=4}"
+                Header="{x:Static properties:Resources.Total}"
+                Visibility="{Binding Data.Total.IsChecked, Source={StaticResource columns}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding Futures}"
+                DisplayIndex="{Binding Data.Futures.Order, Source={StaticResource columns}, Mode=TwoWay, FallbackValue=3}"
+                Header="{x:Static properties:Resources.Futures}"
+                Visibility="{Binding Data.Futures.IsChecked, Source={StaticResource columns}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding Securities}"
+                DisplayIndex="{Binding Data.Securities.Order, Source={StaticResource columns}, Mode=TwoWay, FallbackValue=2}"
+                Header="{x:Static properties:Resources.Securities}"
+                Visibility="{Binding Data.Securities.IsChecked, Source={StaticResource columns}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding CurrencySummary}"
+                DisplayIndex="{Binding Data.CurrencySummary.Order, Source={StaticResource columns}, Mode=TwoWay, FallbackValue=1}"
+                Header="{x:Static properties:Resources.CurrencySummary}"
+                Visibility="{Binding Data.CurrencySummary.IsChecked, Source={StaticResource columns}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <DataGridTextColumn
+                Binding="{Binding Currency}"
+                DisplayIndex="{Binding Data.Currency.Order, Source={StaticResource columns}, Mode=TwoWay, FallbackValue=0}"
+                Header="{x:Static properties:Resources.Currency}"
+                Visibility="{Binding Data.Currency.IsChecked, Source={StaticResource columns}, Converter={StaticResource BooleanToVisibilityConverter}}" />
+        </DataGrid.Columns>
+    </DataGrid>
+</UserControl>
